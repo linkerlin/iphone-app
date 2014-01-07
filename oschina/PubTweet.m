@@ -19,6 +19,7 @@
 @synthesize isSourceUser;
 
 #pragma mark - View lifecycle
+// 视图加载完成
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -51,6 +52,8 @@
     _emojiView.delegate = self;
     [scroll addSubview:_emojiView];
 }
+
+// 释放视图 当内存过低，释放一些不需要的视图时调用。
 - (void)viewDidUnload
 {
     [self setImg:nil];
@@ -59,12 +62,17 @@
     [self setLblStringlength:nil];
     [super viewDidUnload];
 }
+
+// UIViewController对象的视图已经消失、被覆盖或是隐藏时调用
 - (void)viewDidDisappear:(BOOL)animated
 {
     if ([Config Instance].tweetCachePic) {
         self.img.image = [Config Instance].tweetCachePic;
     }
 }
+
+
+// view 页面显示后执行
 - (void)viewDidAppear:(BOOL)animated
 {
     if (self.isSourceUser) {
@@ -84,10 +92,13 @@
     }
 
 }
+
+// 当内存占用过高的时候 会被执行
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
+
 
 #pragma mark - 发表动弹
 - (IBAction)click_PubTweet:(id)sender {
